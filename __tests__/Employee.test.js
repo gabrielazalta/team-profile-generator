@@ -1,8 +1,3 @@
-const {
-    test,
-    expect
-} = require('@jest/globals');
-
 const Employee = require('../lib/Employee.js');
 
 test('create a new instance of object with no parameter', () => {
