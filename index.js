@@ -54,7 +54,7 @@ function newTeamMember() {
         });
 }
 
-// add new manager
+// add new Manager
 function newManager() {
     inquirer.prompt([{
                 type: "input",
@@ -275,6 +275,10 @@ function newIntern() {
 
         })
 };
+
+function completeRoster() {
+    console.log("************************************ You have completed your team roster! ************************************")
+}
 
 start();
 
