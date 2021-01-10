@@ -1,6 +1,5 @@
 const inquirer = require("inquirer");
 const fs = require("fs");
-const bootstrap = require('bootstrap');
 
 const Employee = require("./lib/Employee")
 const Engineer = require("./lib/Engineer")
@@ -118,8 +117,8 @@ function newManager() {
             const id = data.id
             const officeNumber = data.officeNumber
 
-            const manager = new Manager(name, email, id, officeNumber)
-            teamRoster.push(manager)
+            const addTeamMember = new Manager(name, email, id, officeNumber)
+            teamRoster.push(addTeamMember)
             newTeamMember();
 
         })
@@ -192,8 +191,8 @@ function newEngineer() {
             const id = data.id
             const github = data.github
 
-            const engineer = new Engineer(name, email, id, github)
-            teamRoster.push(engineer)
+            const addTeamMember = new Engineer(name, email, id, github)
+            teamRoster.push(addTeamMember)
             newTeamMember();
 
         })
@@ -266,8 +265,8 @@ function newIntern() {
             const id = data.id
             const school = data.school
 
-            const intern = new Intern(name, email, id, school)
-            teamRoster.push(intern)
+            const addTeamMember = new Intern(name, email, id, school)
+            teamRoster.push(addTeamMember)
             newTeamMember();
 
         })
@@ -309,7 +308,7 @@ function completeRoster() {
     htmlArray.push(html);
 
     for (let i = 1; i > teamRoster.length; i++) {
-        let card = "";
+        const card = "";
 
         if (teamRoster[i].officeNumber) {
             card = `
