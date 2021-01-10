@@ -17,40 +17,11 @@ function start() {
             default: true
         }])
         .then(function (data) {
-            newTeamMember();
+            newManager();
         });
 }
 
-//add team members
-function newTeamMember() {
-    inquirer.prompt([{
-            type: "list",
-            name: "addTeamMember",
-            message: "Please select the team member you would like to add, or confirm if your team is complete:",
-            choices: ["Manager", "Engineer", "Intern", "My team is complete!"],
-        }])
-        .then(function (data) {
-            switch (data.addTeamMember) {
-                case "Manager":
-                    newManager();
-                    break;
-
-                case "Engineer":
-                    newEngineer();
-                    break;
-
-                case "Intern":
-                    newIntern();
-                    break;
-
-                case "My team is complete!":
-                    completeRoster();
-                    break;
-            }
-        });
-}
-
-// add new Manager
+// add Manager
 function newManager() {
     inquirer.prompt([{
                 type: "input",
@@ -104,14 +75,10 @@ function newManager() {
                     }
                 }
             },
-            {
-                type: "confirm",
-                name: "complete",
-                message: "You have completed this team member's profile! Confirm to continue.",
-                default: true
-            },
         ])
         .then(function (data) {
+            console.log("You have completed the manager's profile!");
+
             const name = data.name
             const email = data.email
             const id = data.id
@@ -123,6 +90,32 @@ function newManager() {
 
         })
 };
+
+//add team members
+function newTeamMember() {
+    inquirer.prompt([{
+            type: "list",
+            name: "addTeamMember",
+            message: "Please select the team member you would like to add, or confirm if your team is complete:",
+            choices: ["Engineer", "Intern", "My team is complete!"],
+        }])
+        .then(function (data) {
+            switch (data.addTeamMember) {
+
+                case "Engineer":
+                    newEngineer();
+                    break;
+
+                case "Intern":
+                    newIntern();
+                    break;
+
+                case "My team is complete!":
+                    completeRoster();
+                    break;
+            }
+        });
+}
 
 // add new Engineer
 function newEngineer() {
@@ -168,7 +161,7 @@ function newEngineer() {
             {
                 type: "input",
                 name: "github",
-                message: "What is the engineer's github username?",
+                message: "What is the engineer's GitHub username?",
                 validate: github => {
                     if (github) {
                         return true;
@@ -178,14 +171,10 @@ function newEngineer() {
                     }
                 }
             },
-            {
-                type: "confirm",
-                name: "complete",
-                message: "You have completed this team member's profile! Confirm to continue.",
-                default: true
-            },
         ])
         .then(function (data) {
+            console.log("You have completed this engineers's profile!");
+
             const name = data.name
             const email = data.email
             const id = data.id
@@ -252,14 +241,10 @@ function newIntern() {
                     }
                 }
             },
-            {
-                type: "confirm",
-                name: "complete",
-                message: "You have completed this team member's profile! Confirm to continue.",
-                default: true
-            },
         ])
         .then(function (data) {
+            console.log("You have completed this intern's profile!");
+
             const name = data.name
             const email = data.email
             const id = data.id
@@ -273,8 +258,6 @@ function newIntern() {
 };
 
 function completeRoster() {
-    console.log("************************************ You have completed your team roster! ************************************")
-
     const htmlArray = [];
 
     const html = `
@@ -307,22 +290,23 @@ function completeRoster() {
 
     htmlArray.push(html);
 
-    for (let i = 1; i > teamRoster.length; i++) {
-        const card = "";
+    for (let i = 0; i < teamRoster.length; i++) {
+        let card = "";
+
 
         if (teamRoster[i].officeNumber) {
             card = `
                 <div class="col">
                 <div class="card text-white bg-primary p-2 m-5">
                     <div class="card-body">
-                        <h5 class="card-title">${newManager.name}</h5>
+                        <h5 class="card-title">${teamRoster[i].name}</h5>
                         <h6 class="card-subtitle mb-2 text-white"><i class="fas fa-mug-hot"></i> Manager
                         </h6>
                         <div class="card text-dark">
-                            <ul class="list-group list-group-flush">
-                                <li class="list-group-item">ID: ${newManager.id}</li>
-                                <li class="list-group-item">Email: ${newManager.email}</li>
-                                <li class="list-group-item">Office Number: ${newManager.officeNumber}</li>
+                            <ul class="list-group fs-6 list-group-flush">
+                                <li class="list-group-item">ID: ${teamRoster[i].id}</li>
+                                <li class="list-group-item">Email: <a href="mailto:${teamRoster[i].email}"> ${teamRoster[i].email}</a></li>
+                                <li class="list-group-item">Office Number: ${teamRoster[i].officeNumber}</li>
                             </ul>
                         </div>
                     </div>
@@ -335,13 +319,13 @@ function completeRoster() {
                 <div class="col">
                 <div class="card text-white bg-primary p-2 m-5">
                     <div class="card-body">
-                        <h5 class="card-title">${newEngineer.name}</h5>
+                        <h5 class="card-title">${teamRoster[i].name}</h5>
                         <h6 class="card-subtitle mb-2 text-white"> <i class="fas fa-glasses"></i> Engineer</h6>
                         <div class="card text-dark">
-                            <ul class="list-group list-group-flush">
-                                <li class="list-group-item">ID: ${newEngineer.id}</li>
-                                <li class="list-group-item">Email: ${newEngineer.email}</li>
-                                <li class="list-group-item">GitHub: ${newEngineer.github}</li>
+                            <ul class="list-group fs-6 list-group-flush">
+                                <li class="list-group-item">ID: ${teamRoster[i].id}</li>
+                                <li class="list-group-item">Email: <a href="mailto:${teamRoster[i].email}"> ${teamRoster[i].email}</a></li>
+                                <li class="list-group-item">GitHub:<a href="https://github.com/${teamRoster[i].github}"> ${teamRoster[i].github}</a></li>
                             </ul>
                         </div>
                     </div>
@@ -354,32 +338,32 @@ function completeRoster() {
                 <div class="col">
                 <div class="card text-white bg-primary p-2 m-5">
                     <div class="card-body">
-                        <h5 class="card-title">${newIntern.name}</h5>
+                        <h5 class="card-title">${teamRoster[i].name}</h5>
                         <h6 class="card-subtitle mb-2 text-white"><i class="fas fa-user-graduate"></i> Intern</h6>
                         <div class="card text-dark">
-                            <ul class="list-group list-group-flush">
-                                <li class="list-group-item">ID: ${newIntern.id}</li>
-                                <li class="list-group-item">Email: ${newIntern.email}</li>
-                                <li class="list-group-item">School: ${newIntern.school}</li>
+                            <ul class="list-group fs-6 list-group-flush">
+                                <li class="list-group-item">ID: ${teamRoster[i].id}</li>
+                                <li class="list-group-item">Email: <a href="mailto:${teamRoster[i].email}"> ${teamRoster[i].email}</a></li>
+                                <li class="list-group-item">School: ${teamRoster[i].school}</li>
                             </ul>
                         </div>
                     </div>
                 </div>
             </div> `
         }
-
-        card += `
-            </div>
-            </div>
-            <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"
-                integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous">
-            </script>
-        </body>   
-        </html> `
-
         htmlArray.push(card);
     }
 
+    const htmlClose = `
+        </div>
+        </div>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous">
+        </script>
+    </body>   
+    </html> `
+
+    htmlArray.push(htmlClose);
 
     fs.writeFile("./dist/roster.html", htmlArray.join(""), function (err) {
         if (err) {
