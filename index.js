@@ -4,6 +4,7 @@
 
 const inquirer = require("inquirer");
 const fs = require("fs");
+const bootstrap = require('bootstrap');
 
 const Employee = require("./lib/Employee")
 const Engineer = require("./lib/Engineer")
@@ -278,7 +279,10 @@ function newIntern() {
 
 function completeRoster() {
     console.log("************************************ You have completed your team roster! ************************************")
-}
+
+    // const html = 
+
+};
 
 start();
 
